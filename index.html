@@ -1,23 +1,673 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Catálogo</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Enmarcaciones Pro</title>
   <style>
-    body {
-      font-family: Arial;
-      background: #111;
-      color: white;
-      text-align: center;
-      padding: 50px;
+    :root{
+      --bg: #f5f1ea;
+      --card: #ffffff;
+      --text: #1f1f1f;
+      --muted: #6e6a66;
+      --primary: #1f1f1f;
+      --accent: #b08d57;
+      --soft: #ece6dd;
+      --success: #25d366;
+      --shadow: 0 10px 30px rgba(0,0,0,.08);
+      --radius: 22px;
     }
-    h1 {
-      color: #00ffcc;
+
+    *{
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body{
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #f8f5ef 0%, #efe7dd 100%);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      padding: 20px 10px 40px;
+    }
+
+    .phone{
+      width: 100%;
+      max-width: 420px;
+      background: transparent;
+    }
+
+    .app{
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .hero{
+      background: linear-gradient(140deg, rgba(31,31,31,.92), rgba(54,48,43,.88));
+      color: white;
+      border-radius: 28px;
+      padding: 22px 18px 18px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after{
+      content: "";
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: rgba(176,141,87,.20);
+      right: -45px;
+      top: -35px;
+    }
+
+    .brand{
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .logo{
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, var(--accent), #d8bf90);
+      color: #fff;
+      font-weight: bold;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 8px 18px rgba(0,0,0,.18);
+      font-size: 18px;
+    }
+
+    .brand-text h1{
+      font-size: 24px;
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+
+    .brand-text p{
+      font-size: 13px;
+      color: rgba(255,255,255,.8);
+    }
+
+    .hero-copy{
+      margin-top: 18px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-copy h2{
+      font-size: 18px;
+      line-height: 1.3;
+      margin-bottom: 8px;
+      max-width: 280px;
+    }
+
+    .hero-copy p{
+      font-size: 14px;
+      color: rgba(255,255,255,.8);
+      line-height: 1.45;
+    }
+
+    .hero-buttons{
+      margin-top: 16px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 2;
+    }
+
+    .btn{
+      border: none;
+      border-radius: 16px;
+      padding: 12px 16px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: .2s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-primary{
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-secondary{
+      background: rgba(255,255,255,.12);
+      color: white;
+      border: 1px solid rgba(255,255,255,.15);
+    }
+
+    .btn-whatsapp{
+      background: var(--success);
+      color: white;
+      width: 100%;
+    }
+
+    .btn:hover{
+      transform: translateY(-1px);
+    }
+
+    .section-title{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 6px 2px 0;
+    }
+
+    .section-title h3{
+      font-size: 18px;
+    }
+
+    .section-title span{
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .card{
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .categories{
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .category{
+      background: linear-gradient(180deg, #fff, #fbf8f3);
+      border: 1px solid #efe6d9;
+      border-radius: 20px;
+      padding: 16px 14px;
+      min-height: 92px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .category strong{
+      font-size: 15px;
+      line-height: 1.2;
+    }
+
+    .category small{
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .products{
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .product{
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 12px;
+      align-items: center;
+      border: 1px solid #eee4d7;
+      border-radius: 20px;
+      padding: 10px;
+      background: #fffdfa;
+    }
+
+    .product-image{
+      width: 92px;
+      height: 92px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #d2c1aa, #f2e8d9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 34px;
+    }
+
+    .product-info h4{
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+
+    .product-info p{
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+
+    .price-row{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .price{
+      font-size: 15px;
+      font-weight: bold;
+      color: var(--primary);
+    }
+
+    .mini-btn{
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .quote-box{
+      background: linear-gradient(180deg, #fff, #faf6f0);
+      border: 1px solid #ede3d8;
+    }
+
+    .quote-box p.helper{
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+      margin-bottom: 14px;
+    }
+
+    .form-grid{
+      display: grid;
+      gap: 12px;
+    }
+
+    .input-group{
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .input-group label{
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .input-group input,
+    .input-group select,
+    .input-group textarea{
+      width: 100%;
+      border: 1px solid #ddd3c8;
+      border-radius: 14px;
+      padding: 12px 12px;
+      font-size: 14px;
+      background: white;
+      outline: none;
+    }
+
+    .input-group textarea{
+      min-height: 82px;
+      resize: vertical;
+    }
+
+    .estimate{
+      background: #f4ede3;
+      border: 1px dashed #ccb08a;
+      border-radius: 18px;
+      padding: 14px;
+      margin-top: 14px;
+    }
+
+    .estimate strong{
+      display: block;
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+
+    .estimate p{
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .info-list{
+      display: grid;
+      gap: 10px;
+    }
+
+    .info-item{
+      background: #fcfaf7;
+      border: 1px solid #eee5da;
+      padding: 14px;
+      border-radius: 18px;
+    }
+
+    .info-item strong{
+      display: block;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .info-item span{
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .footer-note{
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      padding: 4px 10px 0;
+    }
+
+    .sticky-cta{
+      position: sticky;
+      bottom: 12px;
+      z-index: 10;
+    }
+
+    @media (max-width: 360px){
+      .product{
+        grid-template-columns: 80px 1fr;
+      }
+      .product-image{
+        width: 80px;
+        height: 80px;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Catálogo Digital</h1>
-  <p>Este será mi primer sistema para vender</p>
+  <div class="phone">
+    <div class="app">
+
+      <section class="hero">
+        <div class="brand">
+          <div class="logo">EP</div>
+          <div class="brand-text">
+            <h1>Enmarcaciones Pro</h1>
+            <p>Marcos, espejos y trabajos a medida</p>
+          </div>
+        </div>
+
+        <div class="hero-copy">
+          <h2>Tu catálogo móvil para mostrar, cotizar y vender por WhatsApp</h2>
+          <p>Diseño elegante, atención rápida y productos personalizables para enmarcaciones y decoración.</p>
+        </div>
+
+        <div class="hero-buttons">
+          <a href="#catalogo" class="btn btn-primary">Ver catálogo</a>
+          <a href="#cotizar" class="btn btn-secondary">Cotizar ahora</a>
+        </div>
+      </section>
+
+      <div class="section-title">
+        <h3>Categorías</h3>
+        <span>Adaptable a tu negocio</span>
+      </div>
+
+      <section class="categories">
+        <div class="category">
+          <strong>Marcos a medida</strong>
+          <small>Personalizados por tamaño y estilo</small>
+        </div>
+        <div class="category">
+          <strong>Espejos decorativos</strong>
+          <small>Modernos, clásicos y minimalistas</small>
+        </div>
+        <div class="category">
+          <strong>Cuadros y láminas</strong>
+          <small>Listos para hogar y oficina</small>
+        </div>
+        <div class="category">
+          <strong>Molduras</strong>
+          <small>Diferentes colores y terminaciones</small>
+        </div>
+      </section>
+
+      <div class="section-title" id="catalogo">
+        <h3>Destacados</h3>
+        <span>Lo más consultado</span>
+      </div>
+
+      <section class="products">
+        <div class="product card">
+          <div class="product-image">🖼️</div>
+          <div class="product-info">
+            <h4>Marco Clásico Negro</h4>
+            <p>Ideal para fotografías, diplomas y cuadros decorativos. Estilo sobrio y elegante.</p>
+            <div class="price-row">
+              <div class="price">Desde $18.990</div>
+              <button class="mini-btn" onclick="scrollToQuote()">Cotizar</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="product card">
+          <div class="product-image">🪞</div>
+          <div class="product-info">
+            <h4>Espejo Decorativo</h4>
+            <p>Perfecto para living, dormitorio o recepción. Disponible en distintos bordes y tamaños.</p>
+            <div class="price-row">
+              <div class="price">Desde $39.990</div>
+              <button class="mini-btn" onclick="scrollToQuote()">Consultar</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="product card">
+          <div class="product-image">🏡</div>
+          <div class="product-info">
+            <h4>Cuadro Decorativo Enmarcado</h4>
+            <p>Láminas modernas con terminación premium para dar estilo a tus espacios.</p>
+            <div class="price-row">
+              <div class="price">Desde $24.990</div>
+              <button class="mini-btn" onclick="scrollToQuote()">Ver opciones</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-title" id="cotizar">
+        <h3>Cotiza tu marco</h3>
+        <span>Demo para GitHub</span>
+      </div>
+
+      <section class="card quote-box">
+        <p class="helper">
+          Completa los datos y la plataforma preparará un mensaje automático para WhatsApp.
+        </p>
+
+        <div class="form-grid">
+          <div class="input-group">
+            <label for="nombre">Tu nombre</label>
+            <input type="text" id="nombre" placeholder="Ej: Patricio" />
+          </div>
+
+          <div class="input-group">
+            <label for="producto">Tipo de trabajo</label>
+            <select id="producto">
+              <option value="Marco a medida">Marco a medida</option>
+              <option value="Espejo decorativo">Espejo decorativo</option>
+              <option value="Cuadro enmarcado">Cuadro enmarcado</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label for="ancho">Ancho (cm)</label>
+            <input type="number" id="ancho" placeholder="Ej: 80" />
+          </div>
+
+          <div class="input-group">
+            <label for="alto">Alto (cm)</label>
+            <input type="number" id="alto" placeholder="Ej: 60" />
+          </div>
+
+          <div class="input-group">
+            <label for="moldura">Tipo de moldura</label>
+            <select id="moldura">
+              <option value="Clásica">Clásica</option>
+              <option value="Moderna">Moderna</option>
+              <option value="Premium">Premium</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label for="color">Color</label>
+            <select id="color">
+              <option value="Negro">Negro</option>
+              <option value="Blanco">Blanco</option>
+              <option value="Madera natural">Madera natural</option>
+              <option value="Dorado">Dorado</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label for="vidrio">Vidrio</label>
+            <select id="vidrio">
+              <option value="Normal">Normal</option>
+              <option value="Antirreflejo">Antirreflejo</option>
+              <option value="Sin vidrio">Sin vidrio</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label for="observaciones">Observaciones</label>
+            <textarea id="observaciones" placeholder="Ej: Para diploma, foto familiar o regalo especial"></textarea>
+          </div>
+        </div>
+
+        <div class="estimate">
+          <strong id="resultado">Valor estimado: $0</strong>
+          <p>
+            Este valor es referencial para la demo. Luego podemos reemplazar este cálculo por el formato exacto que ya tienes en otra conversación.
+          </p>
+        </div>
+      </section>
+
+      <div class="sticky-cta">
+        <button class="btn btn-whatsapp" onclick="enviarWhatsApp()">
+          Cotizar por WhatsApp
+        </button>
+      </div>
+
+      <div class="section-title">
+        <h3>Información</h3>
+        <span>Confianza para vender</span>
+      </div>
+
+      <section class="info-list">
+        <div class="info-item">
+          <strong>Atención personalizada</strong>
+          <span>Trabajos a medida para hogares, oficinas, regalos y decoración.</span>
+        </div>
+        <div class="info-item">
+          <strong>Ubicación</strong>
+          <span>Curicó, Chile · Atención presencial y coordinación por WhatsApp.</span>
+        </div>
+        <div class="info-item">
+          <strong>Horarios</strong>
+          <span>Lunes a sábado · 09:00 a 19:00 hrs.</span>
+        </div>
+        <div class="info-item">
+          <strong>Instagram</strong>
+          <span>@enmarcacionespro</span>
+        </div>
+      </section>
+
+      <p class="footer-note">
+        Demo móvil orientada a enmarcaciones. Luego la adaptamos a más rubros y al cálculo real.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const whatsappNumber = "56912345678";
+
+    const nombre = document.getElementById("nombre");
+    const producto = document.getElementById("producto");
+    const ancho = document.getElementById("ancho");
+    const alto = document.getElementById("alto");
+    const moldura = document.getElementById("moldura");
+    const color = document.getElementById("color");
+    const vidrio = document.getElementById("vidrio");
+    const observaciones = document.getElementById("observaciones");
+    const resultado = document.getElementById("resultado");
+
+    function calcularEstimado() {
+      const a = Number(ancho.value) || 0;
+      const h = Number(alto.value) || 0;
+
+      let base = 12000;
+      let area = a * h;
+
+      let extraMoldura = 0;
+      if (moldura.value === "Moderna") extraMoldura = 4000;
+      if (moldura.value === "Premium") extraMoldura = 9000;
+
+      let extraVidrio = 0;
+      if (vidrio.value === "Antirreflejo") extraVidrio = 7000;
+      if (vidrio.value === "Sin vidrio") extraVidrio = -3000;
+
+      let extraColor = 0;
+      if (color.value === "Dorado") extraColor = 3500;
+      if (color.value === "Madera natural") extraColor = 2000;
+
+      let valor = base + (area * 2.1) + extraMoldura + extraVidrio + extraColor;
+
+      if (a === 0 || h === 0) {
+        valor = 0;
+      }
+
+      const valorFinal = Math.max(0, Math.round(valor));
+      resultado.textContent = "Valor estimado: $" + valorFinal.toLocaleString("es-CL");
+      return valorFinal;
+    }
+
+    function enviarWhatsApp() {
+      const valor = calcularEstimado();
+
+      const mensaje =
+`Hola, quiero cotizar desde la tienda móvil:
+
+Nombre: ${nombre.value || "-"}
+Producto: ${producto.value}
+Ancho: ${ancho.value || 0} cm
+Alto: ${alto.value || 0} cm
+Moldura: ${moldura.value}
+Color: ${color.value}
+Vidrio: ${vidrio.value}
+Observaciones: ${observaciones.value || "-"}
+
+Valor estimado: $${valor.toLocaleString("es-CL")}`;
+
+      const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(mensaje)}`;
+      window.open(url, "_blank");
+    }
+
+    function scrollToQuote() {
+      document.getElementById("cotizar").scrollIntoView({
+        behavior: "smooth"
+      });
+    }
+
+    [ancho, alto, moldura, color, vidrio].forEach(el => {
+      el.addEventListener("input", calcularEstimado);
+      el.addEventListener("change", calcularEstimado);
+    });
+
+    calcularEstimado();
+  </script>
 </body>
 </html>
